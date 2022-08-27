@@ -19,12 +19,16 @@ public:
             if(nums[mid]<target) low=mid+1;
             if(nums[mid]>target) high=mid-1;
         }
-        if(low==high) return nums[low]<target?low+1:low;
-        //不会发生low=mid+1后low>high
-        //只有high=mid-1后low>high
-        //此时high位元素小于目标，low位元素大于目标
-        return low;
+        return nums[low]<target?low+1:low;
     }
 };
+/*
+不会发生low=mid+1后low>high
+只有high=mid-1后low>high
+此时high位元素小于目标，low位元素大于目标，返回low
+而如果low==high，也是判断low位
+如果low位小于目标，返回low+1
+如果low位大于目标，返回low
+*/
 // @lc code=end
 
