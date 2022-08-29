@@ -17,7 +17,7 @@ class Solution {
 public:
     int mySqrt(int x) {
         if(x<2) return x;
-        double root=x>>1;
+        double root=x/2;
         while(abs(root*root - x)>=1) root=(root+x/root)/2;
         return int(root);
     }
