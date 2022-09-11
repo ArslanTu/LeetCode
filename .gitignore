@@ -33,6 +33,7 @@
 
 # VSCode config
 .vscode/
+cpp.vscode/
 
 # exe file
 *.exe
