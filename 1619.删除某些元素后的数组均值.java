@@ -10,15 +10,13 @@ import java.util.Arrays;
 class Solution {
     public double trimMean(int[] arr) {
         Arrays.sort(arr);
-        int low=arr[(int)(arr.length*0.05)];
-        int high=arr[arr.length-(int)(arr.length*0.05)-1];
-        float sum=0;
+        int low=(int)(arr.length*0.05);
+        int high=(int)(arr.length*0.95);
+        double sum=0;
         int n=0;
-        for(int num:arr) {
-            if(num>=low&&num<=high) {
-                ++n;
-                sum+=num;
-            }
+        for(int i=low;i<high;++i) {
+            ++n;
+            sum+=arr[i];
         }
         return sum/n;
     }
