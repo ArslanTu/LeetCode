@@ -33,9 +33,33 @@ struct TreeNode {
  * };
  */
 class Solution {
+private:
+    TreeNode* construct(vector<int>& inorder, vector<int>& postorder) {
+        if (postorder.size()==0) return nullptr;
+        TreeNode* root=new TreeNode(postorder[postorder.size()-1]);
+        postorder.pop_back();
+        if (postorder.size()==0) return root;
+        int mid=0;
+        for (int i=0;i<inorder.size();++i) {
+            if (root->val==inorder[i]) {
+                mid=i;
+                break;
+            }
+        }
+        vector<int> lInorder(inorder.begin(),inorder.begin()+mid);
+        vector<int> rInorder(inorder.begin()+mid+1,inorder.end());
+
+        vector<int> lPostorder(postorder.begin(),postorder.begin()+lInorder.size());
+        vector<int> rPostorder(postorder.begin()+lInorder.size(),postorder.end());
+        
+        root->right=construct(rInorder,rPostorder);
+        root->left=construct(lInorder,lPostorder);
+
+        return root;
+    }
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-
+        return construct(inorder,postorder);
     }
 };
 // @lc code=end
