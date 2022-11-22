@@ -37,3 +37,5 @@ cpp.vscode/
 
 # exe file
 *.exe
+
+test.cpp

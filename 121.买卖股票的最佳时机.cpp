@@ -15,7 +15,7 @@ using std::vector;
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        //动态规划
+        //贪心算法
         if(prices.size()<2) return 0;
         int maxProfit=0,minPrice=prices[0];
         for(int i=1;i<prices.size();++i){

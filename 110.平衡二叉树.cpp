@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=108 lang=cpp
+ * @lc app=leetcode.cn id=110 lang=cpp
  *
- * [108] 将有序数组转换为二叉搜索树
+ * [110] 平衡二叉树
  */
 
 // @lc code=start
@@ -16,10 +16,6 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#include <vector>
-
-using std::vector;
-
 // struct TreeNode {
 //     int val;
 //     TreeNode *left;
@@ -28,20 +24,25 @@ using std::vector;
 //     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 //     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 // };
-
+#include <algorithm>
+using std::max;
+using std::abs;
 class Solution {
 private:
-    TreeNode* dfs(const vector<int>& nums,int low,int high) {
-        if (low>high) return nullptr;
-        int mid=(low+high)/2;
-        TreeNode* root = new TreeNode(nums[mid]);
-        root->left=dfs(nums,low,mid-1);
-        root->right=dfs(nums,mid+1,high);
-        return root;
+    bool flag=true;
+    int dfs(TreeNode* root) {
+        if (root==nullptr) return 0;
+        int leftDepth=dfs(root->left);
+        int rightDepth=dfs(root->right);
+        if (abs(leftDepth-rightDepth)>1) flag=false;
+        return max(leftDepth,rightDepth)+1;
     }
 public:
-    TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return dfs(nums,0,nums.size()-1);
+    bool isBalanced(TreeNode* root) {
+        if (root==nullptr) return true;
+        dfs(root);
+        //return abs(dfs(root->left)-dfs(root->right))<=1;
+        return flag;
     }
 };
 // @lc code=end

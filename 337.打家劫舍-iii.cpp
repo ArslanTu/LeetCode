@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=108 lang=cpp
+ * @lc app=leetcode.cn id=337 lang=cpp
  *
- * [108] 将有序数组转换为二叉搜索树
+ * [337] 打家劫舍 III
  */
 
 // @lc code=start
@@ -16,9 +16,6 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#include <vector>
-
-using std::vector;
 
 // struct TreeNode {
 //     int val;
@@ -29,20 +26,24 @@ using std::vector;
 //     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 // };
 
+#include <vector>
+using std::vector;
+using std::max;
 class Solution {
-private:
-    TreeNode* dfs(const vector<int>& nums,int low,int high) {
-        if (low>high) return nullptr;
-        int mid=(low+high)/2;
-        TreeNode* root = new TreeNode(nums[mid]);
-        root->left=dfs(nums,low,mid-1);
-        root->right=dfs(nums,mid+1,high);
-        return root;
-    }
 public:
-    TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return dfs(nums,0,nums.size()-1);
+    int rob(TreeNode* root) {
+        return max(robTree(root)[0],robTree(root)[1]);
     }
+
+    vector<int> robTree(TreeNode* cur) {
+        if (cur==nullptr) return vector<int>{0,0};
+        vector<int> left=robTree(cur->left);
+        vector<int> right=robTree(cur->right);
+        int val1=max(left[0],left[1])+max(right[0],right[1]);
+        int val2=left[0]+right[0]+cur->val;
+        return vector<int>{val1,val2};
+    }
+
 };
 // @lc code=end
 

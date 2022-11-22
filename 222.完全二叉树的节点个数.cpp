@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=108 lang=cpp
+ * @lc app=leetcode.cn id=222 lang=cpp
  *
- * [108] 将有序数组转换为二叉搜索树
+ * [222] 完全二叉树的节点个数
  */
 
 // @lc code=start
@@ -16,9 +16,6 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#include <vector>
-
-using std::vector;
 
 // struct TreeNode {
 //     int val;
@@ -31,17 +28,18 @@ using std::vector;
 
 class Solution {
 private:
-    TreeNode* dfs(const vector<int>& nums,int low,int high) {
-        if (low>high) return nullptr;
-        int mid=(low+high)/2;
-        TreeNode* root = new TreeNode(nums[mid]);
-        root->left=dfs(nums,low,mid-1);
-        root->right=dfs(nums,mid+1,high);
-        return root;
+    int ans=0;
+    void dfs(TreeNode* root) {
+        if (!root) return;
+        ++ans;
+        dfs(root->left);
+        dfs(root->right);
     }
 public:
-    TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return dfs(nums,0,nums.size()-1);
+    int countNodes(TreeNode* root) {
+        ans=0;
+        dfs(root);
+        return ans;
     }
 };
 // @lc code=end
