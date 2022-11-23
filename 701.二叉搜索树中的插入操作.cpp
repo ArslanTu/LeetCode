@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=108 lang=cpp
+ * @lc app=leetcode.cn id=701 lang=cpp
  *
- * [108] 将有序数组转换为二叉搜索树
+ * [701] 二叉搜索树中的插入操作
  */
 #include <vector>
 #include <algorithm>
@@ -12,6 +12,7 @@
 #include <set>
 #include <map>
 using namespace std;
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -35,22 +36,29 @@ struct TreeNode {
  */
 class Solution {
 private:
-    TreeNode* dfs(const vector<int>& nums,int low,int high) {
-        TreeNode* root;
-        if (low>high) root= nullptr;
-        else if (low==high) {
-            root=new TreeNode(nums[low]);
+    void insert(TreeNode* root,int& val) {
+        if (val<root->val) {
+            if (!root->left) {
+                TreeNode* left=new TreeNode(val);
+                root->left=left;
+                return;
+            } else insert(root->left,val);
         } else {
-            int mid=low+(high-low)/2;
-            root=new TreeNode(nums[mid]);
-            root->left=dfs(nums,low,mid-1);
-            root->right=dfs(nums,mid+1,high);
+            if (!root->right) {
+                TreeNode* right=new TreeNode(val);
+                root->right=right;
+                return;
+            } else insert(root->right,val);
         }
-        return root;
     }
 public:
-    TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return dfs(nums,0,nums.size()-1);
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if (!root) {
+            TreeNode* ans=new TreeNode(val);
+            return ans;
+        }
+        insert(root,val);
+        return root;
     }
 };
 // @lc code=end

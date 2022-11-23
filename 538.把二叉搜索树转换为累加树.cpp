@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=108 lang=cpp
+ * @lc app=leetcode.cn id=538 lang=cpp
  *
- * [108] 将有序数组转换为二叉搜索树
+ * [538] 把二叉搜索树转换为累加树
  */
 #include <vector>
 #include <algorithm>
@@ -34,23 +34,34 @@ struct TreeNode {
  * };
  */
 class Solution {
+// private:
+//     void inorder(TreeNode* root,vector<TreeNode*>& tree) {
+//         if (!root) return;
+//         inorder(root->left,tree);
+//         tree.push_back(root);
+//         inorder(root->right,tree);
+//     }
+// public:
+//     TreeNode* convertBST(TreeNode* root) {
+//         vector<TreeNode*> tree;
+//         inorder(root,tree);
+//         for (int i=tree.size()-2;i>=0;--i) tree[i]->val+=tree[i+1]->val;
+//         return root;
+//     }
 private:
-    TreeNode* dfs(const vector<int>& nums,int low,int high) {
-        TreeNode* root;
-        if (low>high) root= nullptr;
-        else if (low==high) {
-            root=new TreeNode(nums[low]);
-        } else {
-            int mid=low+(high-low)/2;
-            root=new TreeNode(nums[mid]);
-            root->left=dfs(nums,low,mid-1);
-            root->right=dfs(nums,mid+1,high);
-        }
-        return root;
+    TreeNode* pre;
+    void inorder(TreeNode* root) {
+        if (!root) return;
+        inorder(root->right);
+        root->val+=pre->val;
+        pre=root;
+        inorder(root->left);
     }
 public:
-    TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return dfs(nums,0,nums.size()-1);
+    TreeNode* convertBST(TreeNode* root) {
+        pre=new TreeNode(0);
+        inorder(root);
+        return root;
     }
 };
 // @lc code=end
