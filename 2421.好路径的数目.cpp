@@ -14,48 +14,24 @@
 #include <set>
 #include <map>
 using namespace std;
-class MyNode {
-public:
-    int val;
-    MyNode* left;
-    MyNode* right;
-    MyNode(int x) {
-        val=x;
-        left=nullptr;
-        right=nullptr;
-    }
-    MyNode() {
-        val=0;
-        left=nullptr;
-        right=nullptr;
-    }
-};
 class Solution {
 private:
-    int ans=0;
-    void dfs(int start,MyNode* root) {
-        if (root==nullptr||root->val>start) return;
-        if (root->val==start) ++ans;
-        if (root->left!=nullptr) dfs(start,root->left); 
-        if (root->right!=nullptr) dfs(start,root->right);
+    int ans = 0;
+    void backtracking(vector<vector<int>>& pic, int start, int cur, int before) {
+        for (int i = 0; i < pic[cur].size(); ++i) {
+            if (pic[cur[i]]!=before)
+        }
+
     }
 public:
     int numberOfGoodPaths(vector<int>& vals, vector<vector<int>>& edges) {
-        int n=vals.size();
-        int m=edges.size();
-        ans=n;
-        vector<MyNode*> tree(n);
-        for (int i=0;i<n;++i) {
-            MyNode* root=new MyNode(vals[i]);
-            tree[i]=root;
+        int ans = 0;
+        // 建图
+        vector<vector<int>> pic(vals.size());
+        for (auto& edge : edges) {
+            pic[edge[0]].push_back(edge[1]);
+            pic[edge[1]].push_back(edge[0]);
         }
-        for (int i=0;i<m;++i) {
-            if (tree[edges[i][0]]->left==nullptr) tree[edges[i][0]]->left=tree[edges[i][1]];
-            else tree[edges[i][0]]->right=tree[edges[i][1]];
-        }
-        for (int i=0;i<n;++i) dfs(tree[i]->val,tree[i]);
-        return ans;
-
     }
 };
 // @lc code=end
