@@ -1,3 +1,10 @@
+#
+# @lc app=leetcode.cn id=2227 lang=python3
+#
+# [2227] 加密解密字符串
+#
+
+# @lc code=start
 from typing import List
 
 
@@ -5,6 +12,8 @@ class Encrypter:
     __en = {}
     __dictionary = {}
     def __init__(self, keys: List[str], values: List[str], dictionary: List[str]):
+        self.__en = {}
+        self.__dictionary = {}
         n = len(keys)
         for i in range(n):
             self.__en[keys[i]] = values[i]
@@ -15,12 +24,20 @@ class Encrypter:
     def encrypt(self, word1: str) -> str:
         res = ""
         for ch in word1:
+            if ch not in self.__en: return ""
             res += self.__en[ch]
         return res
 
 
     def decrypt(self, word2: str) -> int:
-        return self.__dictionary[word2]
-en = Encrypter(["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],["ei","zf","ei","am","gb","zz","zz","ac","qa","mn","aa","is","aa","op","pq","qr","rs","st","tu","uv","aa","sz","bb","aa","ac","aa"],["abcd","acbd","adbc","badc","dacb","cadb","cbda","abad"])
-en.encrypt("abce")
-en.decrypt("eizfeiam")
+        if word2 not in self.__dictionary: return 0
+        else: return self.__dictionary[word2]
+
+
+
+# Your Encrypter object will be instantiated and called as such:
+# obj = Encrypter(keys, values, dictionary)
+# param_1 = obj.encrypt(word1)
+# param_2 = obj.decrypt(word2)
+# @lc code=end
+
