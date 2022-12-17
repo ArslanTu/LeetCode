@@ -1,7 +1,7 @@
 #
-# @lc app=leetcode.cn id=200 lang=python3
+# @lc app=leetcode.cn id=547 lang=python3
 #
-# [200] 岛屿数量
+# [547] 省份数量
 #
 
 # @lc code=start
@@ -35,25 +35,13 @@ class UF:
         return self.__count
 
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        m, n = len(grid), len(grid[0])
-        seaNum = 0
-        uf = UF(m * n)
-        dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == "1":
-                    for dir in dirs:
-                        newI = i + dir[0]
-                        newJ = j + dir[1]
-                        if (newI >= 0 and newI < m) and (newJ >= 0 and newJ < n) and grid[newI][newJ] == "1":
-                            uf.union(i * n + j, newI * n + newJ)
-                else: seaNum += 1
-        # islands = set()
-        # for i in range(m):
-        #     for j in range(n):
-        #         if grid[i][j] == "1": islands.add(uf.find(i * n + j))
-        # return len(islands)
-        return uf.getCount() - seaNum
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        uf = UF(n)
+        for i in range(n):
+            for j in range(n): 
+                if isConnected[i][j] == 1:
+                    uf.union(i, j)
+        return uf.getCount()
 # @lc code=end
 

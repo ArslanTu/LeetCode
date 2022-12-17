@@ -1,7 +1,7 @@
 #
-# @lc app=leetcode.cn id=200 lang=python3
+# @lc app=leetcode.cn id=695 lang=python3
 #
-# [200] 岛屿数量
+# [695] 岛屿的最大面积
 #
 
 # @lc code=start
@@ -33,27 +33,26 @@ class UF:
         return self.find(x) == self.find(y)
     def getCount(self) -> int:
         return self.__count
+    def getSize(self, x: int) -> int:
+        rootX = self.find(x)
+        return self.__size[rootX]
 
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        m, n = len(grid), len(grid[0])
-        seaNum = 0
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m , n = len(grid), len(grid[0])
+        ans = 0
         uf = UF(m * n)
         dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]]
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == "1":
+                if grid[i][j] == 1:
                     for dir in dirs:
                         newI = i + dir[0]
                         newJ = j + dir[1]
-                        if (newI >= 0 and newI < m) and (newJ >= 0 and newJ < n) and grid[newI][newJ] == "1":
+                        if (newI >= 0 and newI < m) and (newJ >= 0 and newJ < n) and grid[newI][newJ] == 1:
                             uf.union(i * n + j, newI * n + newJ)
-                else: seaNum += 1
-        # islands = set()
-        # for i in range(m):
-        #     for j in range(n):
-        #         if grid[i][j] == "1": islands.add(uf.find(i * n + j))
-        # return len(islands)
-        return uf.getCount() - seaNum
+                    islandSize = uf.getSize(i * n + j)
+                    ans = ans if ans > islandSize else islandSize
+        return ans
 # @lc code=end
 
