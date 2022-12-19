@@ -1,3 +1,10 @@
+#
+# @lc app=leetcode.cn id=355 lang=python3
+#
+# [355] 设计推特
+#
+
+# @lc code=start
 from collections import defaultdict
 from heapq import heappop, heappush, nlargest
 from typing import List, Set
@@ -20,30 +27,27 @@ class Twitter:
         while len(self.__tweets[userId]) > 10: heappop(self.__tweets[userId])
 
     def getNewsFeed(self, userId: int) -> List[int]:
-        tweets = list(self.__tweets[userId])
+        tweets = nlargest(10, self.__tweets[userId])
         for followee in self.__followed[userId]:
             curTweets = nlargest(10, self.__tweets[followee])
             for tweet in curTweets: heappush(tweets, tweet)
         newTweets = nlargest(10, tweets)
-        ans = []
-        while newTweets:
-            ans.append(heappop(newTweets)[1])
+        ans = [newTweets[i][1] for i in range(len(newTweets))]
         return ans
 
     def follow(self, followerId: int, followeeId: int) -> None:
         self.__followed[followerId].add(followeeId)
-        print()
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
         self.__followed[followerId].discard(followeeId)
-        print()
 
 
-twitter = Twitter()
-twitter.postTweet(1, 5)
-twitter.getNewsFeed(1)
-twitter.follow(1, 2)
-twitter.postTweet(2, 6)
-twitter.getNewsFeed(1)
-twitter.unfollow(1, 2)
-twitter.getNewsFeed(1)
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
+# @lc code=end
+
