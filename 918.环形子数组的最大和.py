@@ -39,9 +39,7 @@ from typing import List
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
         maxSum = minSum = nums[0]
-        n = len(nums)
         sumMax = sumMin = 0
-        i = 0
         for num in nums:
             sumMax += num
             maxSum = maxSum if maxSum > sumMax else sumMax
@@ -50,8 +48,10 @@ class Solution:
             
             sumMin += num
             minSum = minSum if minSum < sumMin else sumMin
-            if i < n - 1 and sumMin >= nums[i + 1]: sumMin = 0
+            if sumMin >= 0:
+                sumMin = 0
         total = sum(nums)
+        if total == minSum: return maxSum
         return max(maxSum, total - minSum)
 # @lc code=end
 
