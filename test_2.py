@@ -1,31 +1,73 @@
-from heapq import heappop, heappush
-from typing import List
+# from tracemalloc import start
+# from typing import List
 
 
-class Solution:
-    def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
-        hp = []
-        m = len(piles)
-        last = [[0, 0] for i in range(m)]
-        for i in range(m):
-            n = k if k < len(piles[i]) else len(piles[i])
-            sum = 0
-            for j in range(n):
-                sum += piles[i][j]
-                value = sum / (j + 1)
-                heappush(hp, [-value, j + 1, i, sum]) # 每单位价值，操作数，所属栈，总价值
-        ans = 0
-        while hp and k > 0:
-            _, ops, index, sum = heappop(hp)
-            if k + last[index][0] >= ops:
-                k += last[index][0]
-                ans -= last[index][1]
-                
-                k -= ops
-                ans += sum
-                last[index] = [ops, sum]
-        return ans
+# class Solution:
+#     def longestRepeating(self, s: str, queryCharacters: str, queryIndices: List[int]) -> List[int]:
+#         maxLen = 1
+#         maxPa = [0, 0]
+#         n = len(s)
+
+#         def compute(t: str, len: int) -> List[int]:
+#             res = [0, 0, 1] # start, end, len
+#             start = end = 0
+#             cnt = 1
+#             for i in range(1, len):
+#                 if t[i] == t[i - 1]:
+#                     cnt += 1
+#                     end += 1
+#                     if cnt > res[2]:
+#                         res[0] = start
+#                         res[1] = end
+#                         res[2] = cnt
+#                 else:
+#                     start = i
+#                     end = i
+#                     cnt = 1
+#             return res
+
+#         init = compute(s, n)
+#         maxLen = init[2]
+#         maxPa[0] = init[0]
+#         maxPa[1] = init[1]
+
+#         m = len(queryCharacters)
+#         ans = [1 for i in range(m)]
+#         for i in range(m):
+#             s = s[:queryIndices[i]:] + queryCharacters[i] + s[queryIndices[i] + 1::]
+#             if (queryIndices[i] >= maxPa[0]) and (queryIndices[i] <= maxPa[1]):
+#                 newRes = compute(s, n)
+#                 maxLen = newRes[2]
+#                 maxPa[0] = newRes[0]
+#                 maxPa[1] = newRes[1]
+#                 ans[i] = maxLen
+#             else:
+#                 cnt = 1
+#                 start = end = i
+#                 if i > 0:
+#                     for j in range(i - 1, -1, -1):
+#                         if j >= 0 and s[j] == s[i]:
+#                             cnt += 1
+#                             start -= 1
+#                         else: break
+#                 if k < n - 1:
+#                     for k in range(i + 1, n):
+#                         if k < n and s[k] == s[i]:
+#                             cnt += 1
+#                             end += 1
+#                         else: break
+#                 if cnt > maxLen:
+#                     maxLen = cnt
+#                     maxPa[0] = start
+#                     maxPa[1] = end
+#                 ans[i] = maxLen
+#         return ans
     
-piles = [[37,88],[51,64,65,20,95,30,26],[9,62,20],[44]]
-solution = Solution()
-solution.maxValueOfCoins(piles, 9)
+# solution = Solution()
+# p1 = "mm"
+# p2 = "bfviuwsr"
+# p3 = [0,0,1,0,0,1,1,0]
+# solution.longestRepeating(p1, p2, p3)
+
+for i in range(-1, -1, -1):
+    print("111")
